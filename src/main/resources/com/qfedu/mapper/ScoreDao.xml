@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qfedu.dao.ScoreDao">
+
+    <resultMap type="com.qfedu.entity.Score" id="ScoreMap">
+        <result property="scId" column="sc_id" jdbcType="INTEGER"/>
+        <result property="sId" column="s_id" jdbcType="INTEGER"/>
+        <result property="suId" column="su_id" jdbcType="INTEGER"/>
+        <result property="scScore" column="sc_score" jdbcType="NUMERIC"/>
+        <result property="scDesc" column="sc_desc" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="ScoreMap">
+        select
+          sc_id, s_id, su_id, sc_score, sc_desc
+        from school.score
+        where sc_id = #{scId}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="ScoreMap">
+        select
+          sc_id, s_id, su_id, sc_score, sc_desc
+        from school.score
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="ScoreMap">
+        select
+          sc_id, s_id, su_id, sc_score, sc_desc
+        from school.score
+        <where>
+            <if test="scId != null">
+                and sc_id = #{scId}
+            </if>
+            <if test="sId != null">
+                and s_id = #{sId}
+            </if>
+            <if test="suId != null">
+                and su_id = #{suId}
+            </if>
+            <if test="scScore != null">
+                and sc_score = #{scScore}
+            </if>
+            <if test="scDesc != null and scDesc != ''">
+                and sc_desc = #{scDesc}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="scId" useGeneratedKeys="true">
+        insert into school.score(s_id, su_id, sc_score, sc_desc)
+        values (#{sId}, #{suId}, #{scScore}, #{scDesc})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update school.score
+        <set>
+            <if test="sId != null">
+                s_id = #{sId},
+            </if>
+            <if test="suId != null">
+                su_id = #{suId},
+            </if>
+            <if test="scScore != null">
+                sc_score = #{scScore},
+            </if>
+            <if test="scDesc != null and scDesc != ''">
+                sc_desc = #{scDesc},
+            </if>
+        </set>
+        where sc_id = #{scId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from school.score where sc_id = #{scId}
+    </delete>
+
+</mapper>

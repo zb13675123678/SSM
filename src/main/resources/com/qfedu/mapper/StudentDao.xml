@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qfedu.dao.StudentDao">
+
+    <resultMap type="com.qfedu.entity.Student" id="StudentMap">
+        <result property="sId" column="s_id" jdbcType="INTEGER"/>
+        <result property="sName" column="s_name" jdbcType="VARCHAR"/>
+        <result property="sPass" column="s_pass" jdbcType="VARCHAR"/>
+        <result property="sTel" column="s_tel" jdbcType="VARCHAR"/>
+        <result property="sAddr" column="s_addr" jdbcType="VARCHAR"/>
+        <result property="sAge" column="s_age" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="StudentMap">
+        select
+          s_id, s_name, s_pass, s_tel, s_addr, s_age
+        from school.student
+        where s_id = #{sId}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="StudentMap">
+        select
+          s_id, s_name, s_pass, s_tel, s_addr, s_age
+        from school.student
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="StudentMap">
+        select
+          s_id, s_name, s_pass, s_tel, s_addr, s_age
+        from school.student
+        <where>
+            <if test="sId != null">
+                and s_id = #{sId}
+            </if>
+            <if test="sName != null and sName != ''">
+                and s_name = #{sName}
+            </if>
+            <if test="sPass != null and sPass != ''">
+                and s_pass = #{sPass}
+            </if>
+            <if test="sTel != null and sTel != ''">
+                and s_tel = #{sTel}
+            </if>
+            <if test="sAddr != null and sAddr != ''">
+                and s_addr = #{sAddr}
+            </if>
+            <if test="sAge != null">
+                and s_age = #{sAge}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="sId" useGeneratedKeys="true">
+        insert into school.student(s_name, s_pass, s_tel, s_addr, s_age)
+        values (#{sName}, #{sPass}, #{sTel}, #{sAddr}, #{sAge})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update school.student
+        <set>
+            <if test="sName != null and sName != ''">
+                s_name = #{sName},
+            </if>
+            <if test="sPass != null and sPass != ''">
+                s_pass = #{sPass},
+            </if>
+            <if test="sTel != null and sTel != ''">
+                s_tel = #{sTel},
+            </if>
+            <if test="sAddr != null and sAddr != ''">
+                s_addr = #{sAddr},
+            </if>
+            <if test="sAge != null">
+                s_age = #{sAge},
+            </if>
+        </set>
+        where s_id = #{sId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from school.student where s_id = #{sId}
+    </delete>
+
+</mapper>

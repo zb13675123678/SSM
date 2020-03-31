@@ -1,0 +1,2 @@
+0:0:0:0:0:0:0:1 - - [31/Mar/2020:13:38:15 +0800] "GET /student/selectOne/1 HTTP/1.1" 200 - http-bio-8889-exec-1 4325
+0:0:0:0:0:0:0:1 - - [31/Mar/2020:13:38:15 +0800] "GET /favicon.ico HTTP/1.1" 404 973 http-bio-8889-exec-2 16
