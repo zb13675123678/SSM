@@ -4,3 +4,6 @@
 2020-03-31 13:38:15-[DEBUG BaseJdbcLogger.java:159]  ==>  Preparing: select s_id, s_name, s_pass, s_tel, s_addr, s_age from school.student where s_id = ? 
 2020-03-31 13:38:15-[DEBUG BaseJdbcLogger.java:159]  ==> Parameters: 1(Integer)
 2020-03-31 13:38:15-[DEBUG BaseJdbcLogger.java:159]  <==      Total: 0
+2020-03-31 23:33:31-[DEBUG BaseJdbcLogger.java:159]  ==>  Preparing: select s_id, s_name, s_pass, s_tel, s_addr, s_age from school.student limit ?, ? 
+2020-03-31 23:33:31-[DEBUG BaseJdbcLogger.java:159]  ==> Parameters: 0(Integer), 5(Integer)
+2020-03-31 23:33:31-[DEBUG BaseJdbcLogger.java:159]  <==      Total: 0

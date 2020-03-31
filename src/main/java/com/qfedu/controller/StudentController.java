@@ -5,6 +5,7 @@ import com.qfedu.service.StudentService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * (Student)表控制层
@@ -30,6 +31,22 @@ public class StudentController {
     @GetMapping("selectOne/{id}")
     public Student selectOne(@PathVariable Integer id) {
         return this.studentService.queryById(id);
+    }
+
+    /**
+     * 分页查询（手写板）
+     * @param currentPage
+     * @param pageSize
+     * @return
+     */
+    @GetMapping("selectPage")
+    public List<Student> getStudentByPage(@RequestParam(value = "cp",defaultValue = "1") Integer currentPage,
+                                          @RequestParam(value = "ps",defaultValue = "5") Integer pageSize){
+
+        currentPage = currentPage <= 1 ? 1 :currentPage;
+        pageSize = pageSize <= 0 ? 10 :pageSize;
+
+        return studentService.queryAllByLimit((currentPage-1)*pageSize,pageSize);
     }
 
 }
